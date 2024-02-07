@@ -1,0 +1,19 @@
+#!/bin/bash
+
+ip="192.168.10."
+
+RED='\E[1;31m'
+GRN='\E[1;32m'
+RES='\E[0m'
+
+for n in $(seq 1 254); do
+echo -ne "$ip$n\t"
+alive=""
+alive=$(ping "$ip$n" -c 1 -W 1 | grep "time=")
+if [ "$alive" == "" ]; then
+echo -ne "${RED}Timeout${RES}\x0d"
+else
+echo -e "${GRN}Alive ${RES}"
+fi
+done
+echo
